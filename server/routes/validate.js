@@ -45,8 +45,14 @@ router.post('/', async (req, res) => {
     return res.status(400).json({ error: 'formattedText is required' });
   }
 
+  if (!process.env.ANTHROPIC_API_KEY) {
+    console.error('ANTHROPIC_API_KEY is not set');
+    return res.status(500).json({ error: 'Validation unavailable: ANTHROPIC_API_KEY is not configured on the server.' });
+  }
+
   try {
-    const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+    // SDK automatically reads ANTHROPIC_API_KEY from environment
+    const client = new Anthropic();
 
     const message = await client.messages.create({
       model: 'claude-sonnet-4-5',
