@@ -148,7 +148,7 @@ export default function ChecklistForm({ checklist, onSubmit, onBack }) {
                     value={values[field.key] || ''}
                     min={field.min}
                     max={field.max}
-                    step={field.step || 1}
+                    step="any"
                     onChange={e => handleChange(field.key, e.target.value)}
                   />
                   {field.unit && (
