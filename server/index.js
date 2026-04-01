@@ -5,6 +5,7 @@ import express from 'express';
 import cors from 'cors';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
+import { existsSync } from 'fs';
 import { validateRoute } from './routes/validate.js';
 import { submissionsRoute } from './routes/submissions.js';
 import { initDb } from './db/init.js';
@@ -21,8 +22,7 @@ initDb();
 app.use('/api/validate', validateRoute);
 app.use('/api/submissions', submissionsRoute);
 
-// Serve built frontend in production
-import { existsSync } from 'fs';
+// Serve built frontend
 const distPath = join(__dirname, '..', 'dist');
 if (existsSync(distPath)) {
   app.use(express.static(distPath));
@@ -30,7 +30,7 @@ if (existsSync(distPath)) {
     res.sendFile(join(distPath, 'index.html'));
   });
 } else {
-  console.error('WARNING: dist/ folder not found. Run npm run build first.');
+  console.error('ERROR: dist/ not found — frontend was not built.');
   app.get('*', (req, res) => {
     res.status(503).send('Frontend not built. Run npm run build.');
   });
