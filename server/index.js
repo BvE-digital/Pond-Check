@@ -22,11 +22,19 @@ app.use('/api/validate', validateRoute);
 app.use('/api/submissions', submissionsRoute);
 
 // Serve built frontend in production
+import { existsSync } from 'fs';
 const distPath = join(__dirname, '..', 'dist');
-app.use(express.static(distPath));
-app.get('*', (req, res) => {
-  res.sendFile(join(distPath, 'index.html'));
-});
+if (existsSync(distPath)) {
+  app.use(express.static(distPath));
+  app.get('*', (req, res) => {
+    res.sendFile(join(distPath, 'index.html'));
+  });
+} else {
+  console.error('WARNING: dist/ folder not found. Run npm run build first.');
+  app.get('*', (req, res) => {
+    res.status(503).send('Frontend not built. Run npm run build.');
+  });
+}
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
