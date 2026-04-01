@@ -21,8 +21,8 @@ function getInitialValues(fields) {
 function validateField(field, value) {
   if (field.type === 'number' && value !== '') {
     const num = parseFloat(value);
-    if (field.min !== undefined && num < field.min) return `Below minimum (${field.min})`;
-    if (field.max !== undefined && num > field.max) return `Above maximum (${field.max})`;
+    if (field.min !== undefined && num < field.min) return `Outside normal range — expected ≥ ${field.min}${field.unit ? ' ' + field.unit : ''}`;
+    if (field.max !== undefined && num > field.max) return `Outside normal range — expected ≤ ${field.max}${field.unit ? ' ' + field.unit : ''}`;
   }
   return null;
 }
@@ -146,8 +146,6 @@ export default function ChecklistForm({ checklist, onSubmit, onBack }) {
                     type="number"
                     className={`input-field ${errors[field.key] ? 'error' : ''}`}
                     value={values[field.key] || ''}
-                    min={field.min}
-                    max={field.max}
                     step="any"
                     onChange={e => handleChange(field.key, e.target.value)}
                   />
@@ -194,7 +192,7 @@ export default function ChecklistForm({ checklist, onSubmit, onBack }) {
               {errors[field.key] && (
                 <div className="flex items-center gap-1 mt-1">
                   <AlertCircle className="w-3.5 h-3.5 text-red-500 flex-shrink-0" />
-                  <p className="text-xs text-red-500">{errors[field.key]} — verify reading</p>
+                  <p className="text-xs text-red-500">{errors[field.key]} — will be flagged for review</p>
                 </div>
               )}
             </div>

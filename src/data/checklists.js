@@ -8,11 +8,16 @@ export const CHECKLISTS = [
       { key: 'pond_id', label: 'Pond ID', type: 'text', required: true, placeholder: 'e.g. E-14' },
       { key: 'date', label: 'Date', type: 'date', required: true },
       { key: 'time', label: 'Time', type: 'time', required: true },
-      { key: 'temperature', label: 'Temperature', type: 'number', unit: '°C', min: 20, max: 35, step: 0.1, required: true },
-      { key: 'dissolved_oxygen', label: 'Dissolved Oxygen', type: 'number', unit: 'mg/L', min: 0, max: 20, step: 0.1, required: true },
-      { key: 'ph', label: 'pH', type: 'number', unit: '', min: 6.0, max: 9.5, step: 0.1, required: true },
-      { key: 'salinity', label: 'Salinity', type: 'number', unit: 'ppt', min: 0, max: 45, step: 0.5, required: true },
-      { key: 'secchi_depth', label: 'Secchi Depth (Transparency)', type: 'number', unit: 'cm', min: 5, max: 100, step: 1, required: true },
+      // Warning if outside 20–35°C; stress below 20, critical above 33
+      { key: 'temperature', label: 'Temperature', type: 'number', unit: '°C', min: 20, max: 35, required: true },
+      // Warning if below 4 mg/L (stress) or above 15 (unusual supersaturation)
+      { key: 'dissolved_oxygen', label: 'Dissolved Oxygen', type: 'number', unit: 'mg/L', min: 4, max: 15, required: true },
+      // Warning if outside 7.0–9.0 (optimal shrimp range)
+      { key: 'ph', label: 'pH', type: 'number', unit: '', min: 7.0, max: 9.0, required: true },
+      // Warning if outside 10–35 ppt for marine shrimp
+      { key: 'salinity', label: 'Salinity', type: 'number', unit: 'ppt', min: 10, max: 35, required: true },
+      // Warning if outside 20–60 cm; very low = turbid/bloom, very high = clear/understocked
+      { key: 'secchi_depth', label: 'Secchi Depth (Transparency)', type: 'number', unit: 'cm', min: 20, max: 60, required: true },
     ],
   },
   {
@@ -23,12 +28,18 @@ export const CHECKLISTS = [
     fields: [
       { key: 'pond_id', label: 'Pond ID', type: 'text', required: true, placeholder: 'e.g. E-14' },
       { key: 'date', label: 'Date', type: 'date', required: true },
-      { key: 'ammonia', label: 'Ammonia (NH₃)', type: 'number', unit: 'mg/L', min: 0, max: 5, step: 0.01, required: true },
-      { key: 'nitrite', label: 'Nitrite (NO₂)', type: 'number', unit: 'mg/L', min: 0, max: 10, step: 0.01, required: true },
-      { key: 'nitrate', label: 'Nitrate (NO₃)', type: 'number', unit: 'mg/L', min: 0, max: 200, step: 0.1, required: true },
-      { key: 'alkalinity', label: 'Alkalinity', type: 'number', unit: 'mg/L CaCO₃', min: 50, max: 300, step: 1, required: true },
-      { key: 'hardness', label: 'Hardness', type: 'number', unit: 'mg/L', min: 50, max: 500, step: 1, required: true },
-      { key: 'hydrogen_sulphide', label: 'Hydrogen Sulphide (H₂S)', type: 'number', unit: 'mg/L', min: 0, max: 1, step: 0.01, required: true },
+      // Warning if >0.1 mg/L; toxic above 0.3 mg/L especially at high pH
+      { key: 'ammonia', label: 'Ammonia (NH₃)', type: 'number', unit: 'mg/L', min: 0, max: 0.1, required: true },
+      // Warning if >0.1 mg/L; acutely toxic to shrimp
+      { key: 'nitrite', label: 'Nitrite (NO₂)', type: 'number', unit: 'mg/L', min: 0, max: 0.1, required: true },
+      // Warning if >50 mg/L; generally less toxic but indicates nutrient load
+      { key: 'nitrate', label: 'Nitrate (NO₃)', type: 'number', unit: 'mg/L', min: 0, max: 50, required: true },
+      // Warning if outside 80–200 mg/L CaCO3; below 80 = unstable pH buffering
+      { key: 'alkalinity', label: 'Alkalinity', type: 'number', unit: 'mg/L CaCO₃', min: 80, max: 200, required: true },
+      // Warning if outside 50–300 mg/L
+      { key: 'hardness', label: 'Hardness', type: 'number', unit: 'mg/L', min: 50, max: 300, required: true },
+      // Warning if >0.01 mg/L; toxic at very low concentrations
+      { key: 'hydrogen_sulphide', label: 'Hydrogen Sulphide (H₂S)', type: 'number', unit: 'mg/L', min: 0, max: 0.01, required: true },
     ],
   },
   {
@@ -46,7 +57,8 @@ export const CHECKLISTS = [
         required: true,
         options: ['Chaetoceros', 'Skeletonema', 'Thalassiosira', 'Chlorella', 'Oscillatoria', 'Microcystis', 'Mixed', 'Other'],
       },
-      { key: 'algae_density', label: 'Algae Density', type: 'number', unit: 'cells/mL', min: 1000, max: 5000000, step: 1000, required: true },
+      // Warning if outside 50,000–1,000,000 cells/mL; bloom >500k, crash risk >2M
+      { key: 'algae_density', label: 'Algae Density', type: 'number', unit: 'cells/mL', min: 50000, max: 1000000, required: true },
       {
         key: 'water_colour',
         label: 'Water Colour',
@@ -78,9 +90,12 @@ export const CHECKLISTS = [
     fields: [
       { key: 'pond_id', label: 'Pond ID', type: 'text', required: true, placeholder: 'e.g. E-14' },
       { key: 'date', label: 'Date', type: 'date', required: true },
-      { key: 'sample_size', label: 'Sample Size', type: 'number', unit: 'shrimp', min: 1, max: 500, step: 1, required: true },
-      { key: 'avg_body_weight', label: 'Average Body Weight', type: 'number', unit: 'g', min: 0.1, max: 50, step: 0.1, required: true },
-      { key: 'survival_pct', label: 'Estimated Survival', type: 'number', unit: '%', min: 0, max: 100, step: 1, required: true },
+      // Warning if sample < 30 (statistically insufficient)
+      { key: 'sample_size', label: 'Sample Size', type: 'number', unit: 'shrimp', min: 30, max: 500, required: true },
+      // Warning if outside 0.5–40g; depends on DOC
+      { key: 'avg_body_weight', label: 'Average Body Weight', type: 'number', unit: 'g', min: 0.5, max: 40, required: true },
+      // Warning if below 60% (economically concerning) or suspiciously high >95%
+      { key: 'survival_pct', label: 'Estimated Survival', type: 'number', unit: '%', min: 60, max: 95, required: true },
       {
         key: 'gut_fullness',
         label: 'Gut Fullness',
@@ -120,9 +135,12 @@ export const CHECKLISTS = [
       { key: 'pond_id', label: 'Pond ID', type: 'text', required: true, placeholder: 'e.g. E-14' },
       { key: 'date', label: 'Date', type: 'date', required: true },
       { key: 'feed_type', label: 'Feed Type / Brand', type: 'text', required: true, placeholder: 'e.g. Skretting HP Pro 2' },
-      { key: 'daily_feed_kg', label: 'Daily Feed Amount', type: 'number', unit: 'kg', min: 0, max: 10000, step: 0.1, required: true },
-      { key: 'feeding_frequency', label: 'Feeding Frequency', type: 'number', unit: 'per day', min: 1, max: 6, step: 1, required: true },
-      { key: 'fcr_estimate', label: 'Feed Conversion Ratio (FCR)', type: 'number', unit: '', min: 0.5, max: 3.0, step: 0.01, required: true },
+      // Warning if daily feed >5% of estimated biomass (overfeeding risk)
+      { key: 'daily_feed_kg', label: 'Daily Feed Amount', type: 'number', unit: 'kg', min: 0.1, max: 5000, required: true },
+      // Warning if outside 2–4 feeds/day
+      { key: 'feeding_frequency', label: 'Feeding Frequency', type: 'number', unit: 'per day', min: 2, max: 4, required: true },
+      // Warning if FCR >1.8 (overfeeding or health issue) or <0.8 (unusually efficient)
+      { key: 'fcr_estimate', label: 'Feed Conversion Ratio (FCR)', type: 'number', unit: '', min: 0.8, max: 1.8, required: true },
       {
         key: 'feed_tray_observation',
         label: 'Feed Tray Observation',
@@ -154,7 +172,8 @@ export const CHECKLISTS = [
         required: true,
         options: ['All operational', 'Partial failure', 'Major failure'],
       },
-      { key: 'aerators_operational', label: 'Aerators Operational', type: 'number', unit: 'units', min: 0, max: 20, step: 1, required: true },
+      // Warning if <2 (insufficient aeration for stocked density)
+      { key: 'aerators_operational', label: 'Aerators Operational', type: 'number', unit: 'units', min: 2, max: 30, required: true },
       {
         key: 'inlet_condition',
         label: 'Water Inlet Condition',
@@ -193,7 +212,8 @@ export const CHECKLISTS = [
     fields: [
       { key: 'pond_id', label: 'Pond ID', type: 'text', required: true, placeholder: 'e.g. E-14' },
       { key: 'date', label: 'Date', type: 'date', required: true },
-      { key: 'daily_mortality', label: 'Estimated Daily Mortality', type: 'number', unit: 'shrimp', min: 0, max: 10000, step: 1, required: true },
+      // Warning if >50/day (concerning) or >500/day (critical)
+      { key: 'daily_mortality', label: 'Estimated Daily Mortality', type: 'number', unit: 'shrimp', min: 0, max: 50, required: true },
       {
         key: 'mortality_pattern',
         label: 'Mortality Pattern',
@@ -232,12 +252,17 @@ export const CHECKLISTS = [
     fields: [
       { key: 'pond_id', label: 'Pond ID', type: 'text', required: true, placeholder: 'e.g. E-14' },
       { key: 'date', label: 'Date', type: 'date', required: true },
-      { key: 'days_of_culture', label: 'Days of Culture (DOC)', type: 'number', unit: 'days', min: 1, max: 180, step: 1, required: true },
-      { key: 'avg_body_weight', label: 'Average Body Weight', type: 'number', unit: 'g', min: 5, max: 50, step: 0.1, required: true },
-      { key: 'target_harvest_weight', label: 'Target Harvest Weight', type: 'number', unit: 'g', min: 15, max: 45, step: 0.5, required: true },
-      { key: 'estimated_biomass', label: 'Estimated Biomass', type: 'number', unit: 'kg', min: 100, max: 30000, step: 10, required: true },
-      { key: 'survival_pct', label: 'Estimated Survival', type: 'number', unit: '%', min: 0, max: 100, step: 1, required: true },
-      { key: 'market_price', label: 'Market Price', type: 'number', unit: 'local/kg', min: 0, max: 999999, step: 0.01, required: true },
+      // Warning if DOC <60 (too early) or >150 (overdue, quality risk)
+      { key: 'days_of_culture', label: 'Days of Culture (DOC)', type: 'number', unit: 'days', min: 60, max: 150, required: true },
+      // Warning if outside 12–35g (below target or overgrown)
+      { key: 'avg_body_weight', label: 'Average Body Weight', type: 'number', unit: 'g', min: 12, max: 35, required: true },
+      // Warning if outside 15–40g target range
+      { key: 'target_harvest_weight', label: 'Target Harvest Weight', type: 'number', unit: 'g', min: 15, max: 40, required: true },
+      // Warning if outside 500–20,000 kg (very low or very high for a single pond)
+      { key: 'estimated_biomass', label: 'Estimated Biomass', type: 'number', unit: 'kg', min: 500, max: 20000, required: true },
+      // Warning if below 60% (economically marginal)
+      { key: 'survival_pct', label: 'Estimated Survival', type: 'number', unit: '%', min: 60, max: 95, required: true },
+      { key: 'market_price', label: 'Market Price', type: 'number', unit: 'local/kg', min: 1, max: 99999, required: true },
       {
         key: 'recommendation',
         label: 'Harvest Recommendation',
