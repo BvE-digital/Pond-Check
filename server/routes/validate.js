@@ -49,7 +49,7 @@ router.post('/', async (req, res) => {
     const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 
     const message = await client.messages.create({
-      model: 'claude-sonnet-4-20250514',
+      model: 'claude-sonnet-4-5',
       max_tokens: 1024,
       system: SYSTEM_PROMPT,
       messages: [
@@ -67,9 +67,9 @@ router.post('/', async (req, res) => {
 
     res.json({ validation: responseText });
   } catch (error) {
-    console.error('Claude API error:', error.message);
+    console.error('Claude API error:', error.status, error.message);
     res.status(500).json({
-      error: 'Validation service unavailable. Your data has been saved locally and will be validated when connectivity is restored.'
+      error: `Validation unavailable (${error.status || 'network'}: ${error.message})`
     });
   }
 });
