@@ -7,9 +7,9 @@ function TypingIndicator() {
   return (
     <div className="flex items-end gap-1 mr-auto">
       <div className="bg-skretting-light rounded-tr-2xl rounded-bl-sm rounded-br-2xl rounded-tl-2xl px-4 py-3 flex items-center gap-1">
-        <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
-        <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
-        <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+        <span className="w-2 h-2 bg-skretting-muted rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
+        <span className="w-2 h-2 bg-skretting-muted rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
+        <span className="w-2 h-2 bg-skretting-muted rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
       </div>
     </div>
   );
@@ -31,7 +31,7 @@ function OutgoingBubble({ text, timestamp }) {
 function IncomingBubble({ text, timestamp }) {
   return (
     <div className="flex flex-col items-start gap-1">
-      <div className="bg-skretting-light text-gray-900 rounded-tr-2xl rounded-bl-sm rounded-br-2xl rounded-tl-2xl px-4 py-3 max-w-[85%]">
+      <div className="bg-white text-skretting-navy border border-skretting-border rounded-tr-2xl rounded-bl-sm rounded-br-2xl rounded-tl-2xl px-4 py-3 max-w-[85%]">
         <p className="text-xs leading-relaxed whitespace-pre-wrap">{text}</p>
       </div>
       {timestamp && (
@@ -157,21 +157,21 @@ export default function SmsView({ checklist, formData, submission, onBack }) {
   const isHistorical = !!(submission && submission.claude_response);
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-skretting-navy sticky top-0 z-10">
+    <div className="min-h-screen bg-skretting-light">
+      {/* Header — white with Skretting red accent */}
+      <header className="app-header">
         <div className="max-w-lg mx-auto px-4 py-3 flex items-center gap-3">
           <button
             onClick={onBack}
-            className="text-gray-300 hover:text-white transition-colors duration-150 flex-shrink-0"
+            className="text-skretting-muted hover:text-skretting-navy transition-colors duration-150 flex-shrink-0"
           >
             <ChevronLeft className="w-5 h-5" />
           </button>
           <div>
-            <p className="text-white font-semibold text-sm leading-tight">
+            <p className="text-sm font-semibold text-skretting-navy leading-tight">
               {isHistorical ? 'Past Submission' : 'Submission Sent'}
             </p>
-            <p className="text-gray-400 text-xs">
+            <p className="text-xs text-skretting-muted">
               {checklist?.name || 'Inspection'} — Pond {formData?.pond_id || submission?.pond_id || '—'}
             </p>
           </div>

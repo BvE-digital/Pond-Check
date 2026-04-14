@@ -4,8 +4,16 @@
 
 @layer base {
   body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    @apply text-gray-900 bg-gray-50;
+    font-family: Arial, system-ui, -apple-system, 'Helvetica Neue', sans-serif;
+    @apply text-gray-900 bg-skretting-light;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  h1, h2, h3 {
+    font-family: 'Sitka Banner', Georgia, serif;
+    @apply text-skretting-navy;
+    line-height: 1.25;
   }
 
   * {
@@ -14,27 +22,36 @@
 }
 
 @layer components {
+  /* Primary action button — Skretting teal */
   .btn-primary {
-    @apply bg-skretting-teal text-white font-medium px-4 py-2 rounded-lg transition-colors duration-150 hover:bg-teal-600 disabled:opacity-50 disabled:cursor-not-allowed;
+    @apply bg-skretting-teal text-white font-medium px-4 py-2 rounded-lg transition-colors duration-150 hover:bg-skretting-teal-dark disabled:opacity-50 disabled:cursor-not-allowed;
   }
 
+  /* Secondary button — white with navy text */
   .btn-secondary {
-    @apply bg-white text-skretting-navy border border-skretting-border font-medium px-4 py-2 rounded-lg transition-colors duration-150 hover:bg-gray-50;
+    @apply bg-white text-skretting-navy border border-skretting-border font-medium px-4 py-2 rounded-lg transition-colors duration-150 hover:bg-skretting-light;
   }
 
+  /* Form inputs */
   .input-field {
     @apply w-full border border-skretting-border rounded-md px-3 py-2 text-sm text-skretting-navy bg-white focus:outline-none focus:ring-2 focus:ring-skretting-teal focus:border-skretting-teal transition-colors duration-150;
   }
 
-  .input-field.error {
-    @apply border-red-500 bg-red-50 focus:ring-red-400 focus:border-red-500;
+  .input-field.warning {
+    @apply border-amber-400 bg-amber-50 focus:ring-amber-300 focus:border-amber-400;
   }
 
   .label {
     @apply block text-sm font-medium text-skretting-navy mb-1;
   }
 
+  /* Cards */
   .card {
     @apply bg-white border border-skretting-border rounded-lg;
+  }
+
+  /* Page header — white with Skretting red bottom border */
+  .app-header {
+    @apply bg-white border-b-2 border-skretting-red sticky top-0 z-10;
   }
 }

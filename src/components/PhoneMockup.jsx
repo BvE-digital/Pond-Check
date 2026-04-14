@@ -6,7 +6,7 @@ export default function PhoneMockup({ children, contactName = 'PondCheck AI' }) 
   const timeStr = now.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
 
   return (
-    <div className="w-full max-w-sm mx-auto border-2 border-gray-800 rounded-[2.5rem] bg-white overflow-hidden shadow-xl">
+    <div className="w-full max-w-sm mx-auto border-2 border-skretting-navy rounded-[2.5rem] bg-white overflow-hidden shadow-md">
       {/* Status bar */}
       <div className="bg-skretting-navy px-6 py-2 flex items-center justify-between">
         <span className="text-white text-xs font-semibold">{timeStr}</span>
@@ -31,14 +31,14 @@ export default function PhoneMockup({ children, contactName = 'PondCheck AI' }) 
       </div>
 
       {/* Message area */}
-      <div className="bg-gray-50 min-h-[380px] max-h-[480px] overflow-y-auto px-4 py-4 flex flex-col gap-3">
+      <div className="bg-skretting-light min-h-[380px] max-h-[480px] overflow-y-auto px-4 py-4 flex flex-col gap-3">
         {children}
       </div>
 
       {/* Input bar — visual only */}
-      <div className="bg-white border-t border-gray-200 px-3 py-2 flex items-center gap-2">
-        <div className="flex-1 bg-gray-100 rounded-full px-4 py-2 text-xs text-gray-400">
-          iMessage
+      <div className="bg-white border-t border-skretting-border px-3 py-2 flex items-center gap-2">
+        <div className="flex-1 bg-skretting-light rounded-full px-4 py-2 text-xs text-skretting-muted">
+          Message
         </div>
         <div className="w-7 h-7 rounded-full bg-skretting-teal flex items-center justify-center">
           <span className="text-white text-xs">↑</span>

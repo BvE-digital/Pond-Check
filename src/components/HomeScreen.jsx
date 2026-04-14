@@ -18,17 +18,18 @@ const ICON_MAP = {
 
 export default function HomeScreen({ onSelect, onViewLog }) {
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-skretting-navy sticky top-0 z-10">
+    <div className="min-h-screen bg-skretting-light">
+      {/* Header — white with Skretting red accent */}
+      <header className="app-header">
         <div className="max-w-2xl mx-auto px-4 py-3 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <img src="/skretting_logo.webp" alt="Skretting" className="h-6 w-auto" />
-            <span className="text-white font-semibold text-base">PondCheck</span>
+            <img src="/skretting_logo.webp" alt="Skretting" className="h-7 w-auto" />
+            <div className="w-px h-5 bg-skretting-border" />
+            <span className="text-skretting-red font-semibold text-sm tracking-wide">PondCheck</span>
           </div>
           <button
             onClick={onViewLog}
-            className="flex items-center gap-1.5 text-sm text-gray-300 hover:text-white transition-colors duration-150"
+            className="flex items-center gap-1.5 text-sm text-skretting-muted hover:text-skretting-navy transition-colors duration-150"
           >
             <ClipboardList className="w-4 h-4" />
             Data Log
@@ -38,7 +39,11 @@ export default function HomeScreen({ onSelect, onViewLog }) {
 
       {/* Content */}
       <main className="max-w-2xl mx-auto px-4 py-6">
-        <p className="text-sm text-skretting-muted mb-4">Select a checklist to begin an inspection</p>
+        {/* Section heading */}
+        <div className="mb-5">
+          <h1 className="text-lg font-serif text-skretting-navy mb-1">Pond Inspections</h1>
+          <p className="text-sm text-skretting-muted">Select a checklist to begin an inspection</p>
+        </div>
 
         <div className="grid grid-cols-2 gap-3">
           {CHECKLISTS.map(checklist => {
@@ -49,8 +54,8 @@ export default function HomeScreen({ onSelect, onViewLog }) {
                 onClick={() => onSelect(checklist)}
                 className="card p-4 text-left hover:border-skretting-teal transition-colors duration-150 cursor-pointer"
               >
-                <div className="flex items-center gap-2 mb-2">
-                  <div className="w-8 h-8 rounded-md bg-skretting-light flex items-center justify-center flex-shrink-0">
+                <div className="flex items-center gap-2 mb-3">
+                  <div className="w-8 h-8 rounded-md bg-skretting-teal-soft flex items-center justify-center flex-shrink-0">
                     <Icon className="w-4 h-4 text-skretting-teal" />
                   </div>
                 </div>

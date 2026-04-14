@@ -11,7 +11,7 @@ function StatusBadge({ status }) {
   }
   if (status === 'flagged') {
     return (
-      <span className="inline-flex items-center gap-1 bg-orange-100 text-skretting-orange text-xs font-medium px-2 py-0.5 rounded">
+      <span className="inline-flex items-center gap-1 bg-skretting-red-soft text-skretting-red text-xs font-medium px-2 py-0.5 rounded">
         ⚠ Flagged
       </span>
     );
@@ -49,19 +49,19 @@ export default function DataLog({ onViewSubmission, onBack }) {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-skretting-navy sticky top-0 z-10">
+    <div className="min-h-screen bg-skretting-light">
+      {/* Header — white with Skretting red accent */}
+      <header className="app-header">
         <div className="max-w-2xl mx-auto px-4 py-3 flex items-center gap-3">
           <button
             onClick={onBack}
-            className="text-gray-300 hover:text-white transition-colors duration-150 flex-shrink-0"
+            className="text-skretting-muted hover:text-skretting-navy transition-colors duration-150 flex-shrink-0"
           >
             <ChevronLeft className="w-5 h-5" />
           </button>
           <div className="flex items-center gap-2">
-            <ClipboardList className="w-4 h-4 text-skretting-teal" />
-            <span className="text-white font-semibold text-sm">Data Log</span>
+            <ClipboardList className="w-4 h-4 text-skretting-red" />
+            <span className="text-sm font-semibold text-skretting-navy">Data Log</span>
           </div>
         </div>
       </header>
@@ -79,14 +79,14 @@ export default function DataLog({ onViewSubmission, onBack }) {
         )}
 
         {fetchError && (
-          <div className="text-center py-12 text-sm text-red-600">
+          <div className="text-center py-12 text-sm text-skretting-red">
             {fetchError}
           </div>
         )}
 
         {!loading && !fetchError && submissions.length === 0 && (
           <div className="text-center py-16">
-            <ClipboardList className="w-10 h-10 text-gray-300 mx-auto mb-3" />
+            <ClipboardList className="w-10 h-10 text-skretting-border mx-auto mb-3" />
             <p className="text-sm text-skretting-muted">No submissions yet.</p>
             <p className="text-xs text-gray-400 mt-1">Completed checklists will appear here.</p>
           </div>
@@ -95,7 +95,7 @@ export default function DataLog({ onViewSubmission, onBack }) {
         {!loading && !fetchError && submissions.length > 0 && (
           <div className="card overflow-hidden">
             {/* Table header */}
-            <div className="grid grid-cols-[1fr_auto_auto_auto] gap-3 px-4 py-2 bg-gray-50 border-b border-skretting-border text-xs font-medium text-skretting-muted uppercase tracking-wide">
+            <div className="grid grid-cols-[1fr_auto_auto_auto] gap-3 px-4 py-2 bg-skretting-light border-b border-skretting-border text-xs font-medium text-skretting-muted uppercase tracking-wide">
               <span>Checklist / Pond</span>
               <span className="hidden sm:block">Time</span>
               <span>Status</span>
@@ -119,7 +119,7 @@ export default function DataLog({ onViewSubmission, onBack }) {
                 <StatusBadge status={sub.status} />
                 <button
                   onClick={() => onViewSubmission(sub)}
-                  className="flex items-center gap-1 text-xs text-skretting-teal hover:text-teal-700 font-medium transition-colors duration-150"
+                  className="flex items-center gap-1 text-xs text-skretting-teal hover:text-skretting-teal-dark font-medium transition-colors duration-150"
                 >
                   <Eye className="w-3.5 h-3.5" />
                   View

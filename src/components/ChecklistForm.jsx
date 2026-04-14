@@ -85,19 +85,19 @@ export default function ChecklistForm({ checklist, onSubmit, onBack }) {
     });
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-skretting-navy sticky top-0 z-10">
+    <div className="min-h-screen bg-skretting-light">
+      {/* Header — white with Skretting red accent */}
+      <header className="app-header">
         <div className="max-w-lg mx-auto px-4 py-3 flex items-center gap-3">
           <button
             onClick={onBack}
-            className="text-gray-300 hover:text-white transition-colors duration-150 flex-shrink-0"
+            className="text-skretting-muted hover:text-skretting-navy transition-colors duration-150 flex-shrink-0"
           >
             <ChevronLeft className="w-5 h-5" />
           </button>
           <div>
-            <p className="text-white font-semibold text-sm leading-tight">{checklist.name}</p>
-            <p className="text-gray-400 text-xs">{checklist.fields.length} fields</p>
+            <p className="text-sm font-semibold text-skretting-navy leading-tight">{checklist.name}</p>
+            <p className="text-xs text-skretting-muted">{checklist.fields.length} fields</p>
           </div>
         </div>
       </header>
@@ -109,7 +109,7 @@ export default function ChecklistForm({ checklist, onSubmit, onBack }) {
             <div key={field.key}>
               <label className="label">
                 {field.label}
-                {field.required && <span className="text-red-500 ml-0.5">*</span>}
+                {field.required && <span className="text-skretting-red ml-0.5">*</span>}
               </label>
 
               {field.type === 'text' && (
@@ -144,7 +144,7 @@ export default function ChecklistForm({ checklist, onSubmit, onBack }) {
                 <div className="flex items-center gap-2">
                   <input
                     type="number"
-                    className={`input-field ${errors[field.key] ? 'error' : ''}`}
+                    className={`input-field ${errors[field.key] ? 'warning' : ''}`}
                     value={values[field.key] || ''}
                     step="any"
                     onChange={e => handleChange(field.key, e.target.value)}
@@ -180,7 +180,7 @@ export default function ChecklistForm({ checklist, onSubmit, onBack }) {
                           type="checkbox"
                           checked={checked}
                           onChange={() => handleMultiselectToggle(field.key, opt)}
-                          className="w-4 h-4 rounded border-gray-300 text-skretting-teal accent-skretting-teal"
+                          className="w-4 h-4 rounded border-gray-300 accent-skretting-teal"
                         />
                         <span className="text-sm text-skretting-navy">{opt}</span>
                       </label>
@@ -190,9 +190,9 @@ export default function ChecklistForm({ checklist, onSubmit, onBack }) {
               )}
 
               {errors[field.key] && (
-                <div className="flex items-center gap-1 mt-1">
-                  <AlertCircle className="w-3.5 h-3.5 text-red-500 flex-shrink-0" />
-                  <p className="text-xs text-red-500">{errors[field.key]} — will be flagged for review</p>
+                <div className="flex items-start gap-1.5 mt-1.5 p-2 bg-amber-50 border border-amber-200 rounded-md">
+                  <AlertCircle className="w-3.5 h-3.5 text-amber-600 flex-shrink-0 mt-0.5" />
+                  <p className="text-xs text-amber-700">{errors[field.key]} — will be flagged for review</p>
                 </div>
               )}
             </div>
@@ -202,7 +202,7 @@ export default function ChecklistForm({ checklist, onSubmit, onBack }) {
             <button
               type="submit"
               disabled={!requiredFilled}
-              className="w-full bg-skretting-teal text-white font-medium py-3 rounded-lg transition-colors duration-150 hover:bg-teal-600 disabled:opacity-50 disabled:cursor-not-allowed text-sm"
+              className="w-full bg-skretting-teal text-white font-medium py-3 rounded-lg transition-colors duration-150 hover:bg-skretting-teal-dark disabled:opacity-50 disabled:cursor-not-allowed text-sm"
             >
               Submit Inspection
             </button>
