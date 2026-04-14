@@ -22,6 +22,9 @@ initDb();
 app.use('/api/validate', validateRoute);
 app.use('/api/submissions', submissionsRoute);
 
+// Health check for Railway
+app.get('/health', (req, res) => res.json({ status: 'ok' }));
+
 // Serve built frontend
 const distPath = join(__dirname, '..', 'dist');
 if (existsSync(distPath)) {
