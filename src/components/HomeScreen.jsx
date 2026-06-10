@@ -48,15 +48,23 @@ export default function HomeScreen({ onSelect, onViewLog }) {
         <div className="grid grid-cols-2 gap-3">
           {CHECKLISTS.map(checklist => {
             const Icon = ICON_MAP[checklist.icon] || Droplets;
+            const isEnabled = checklist.enabled === true;
             return (
               <button
                 key={checklist.id}
-                onClick={() => onSelect(checklist)}
-                className="card p-4 text-left hover:border-skretting-teal transition-colors duration-150 cursor-pointer"
+                onClick={() => isEnabled && onSelect(checklist)}
+                disabled={!isEnabled}
+                className={`card p-4 text-left transition-colors duration-150 ${
+                  isEnabled
+                    ? 'hover:border-skretting-teal cursor-pointer'
+                    : 'opacity-40 cursor-not-allowed'
+                }`}
               >
                 <div className="flex items-center gap-2 mb-3">
-                  <div className="w-8 h-8 rounded-md bg-skretting-teal-soft flex items-center justify-center flex-shrink-0">
-                    <Icon className="w-4 h-4 text-skretting-teal" />
+                  <div className={`w-8 h-8 rounded-md flex items-center justify-center flex-shrink-0 ${
+                    isEnabled ? 'bg-skretting-teal-soft' : 'bg-gray-100'
+                  }`}>
+                    <Icon className={`w-4 h-4 ${isEnabled ? 'text-skretting-teal' : 'text-gray-400'}`} />
                   </div>
                 </div>
                 <p className="text-sm font-semibold text-skretting-navy leading-tight mb-1">

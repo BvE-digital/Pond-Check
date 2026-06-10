@@ -1,9 +1,10 @@
 export const CHECKLISTS = [
   {
     id: 'water-quality-basic',
-    name: 'Water Quality — Basic',
+    name: 'Water Quality - Basic',
     description: 'Core water parameters for daily monitoring',
     icon: 'Droplets',
+    enabled: false,
     fields: [
       { key: 'pond_id', label: 'Pond ID', type: 'text', required: true, placeholder: 'e.g. E-14' },
       { key: 'date', label: 'Date', type: 'date', required: true },
@@ -22,9 +23,10 @@ export const CHECKLISTS = [
   },
   {
     id: 'water-quality-advanced',
-    name: 'Water Quality — Advanced',
+    name: 'Water Quality - Advanced',
     description: 'Chemical parameters for in-depth water analysis',
     icon: 'FlaskConical',
+    enabled: true,
     fields: [
       { key: 'pond_id', label: 'Pond ID', type: 'text', required: true, placeholder: 'e.g. E-14' },
       { key: 'date', label: 'Date', type: 'date', required: true },
@@ -47,6 +49,7 @@ export const CHECKLISTS = [
     name: 'Algae & Plankton Assessment',
     description: 'Bloom status, algae species and plankton density',
     icon: 'Microscope',
+    enabled: false,
     fields: [
       { key: 'pond_id', label: 'Pond ID', type: 'text', required: true, placeholder: 'e.g. E-14' },
       { key: 'date', label: 'Date', type: 'date', required: true },
@@ -87,6 +90,7 @@ export const CHECKLISTS = [
     name: 'Shrimp Health Check',
     description: 'Physical condition and survival assessment',
     icon: 'Activity',
+    enabled: false,
     fields: [
       { key: 'pond_id', label: 'Pond ID', type: 'text', required: true, placeholder: 'e.g. E-14' },
       { key: 'date', label: 'Date', type: 'date', required: true },
@@ -131,6 +135,7 @@ export const CHECKLISTS = [
     name: 'Feed Management',
     description: 'Feed consumption, FCR and adjustment recommendations',
     icon: 'Package',
+    enabled: false,
     fields: [
       { key: 'pond_id', label: 'Pond ID', type: 'text', required: true, placeholder: 'e.g. E-14' },
       { key: 'date', label: 'Date', type: 'date', required: true },
@@ -162,6 +167,7 @@ export const CHECKLISTS = [
     name: 'Pond Infrastructure',
     description: 'Aerators, water lines, bank and screen condition',
     icon: 'Wrench',
+    enabled: false,
     fields: [
       { key: 'pond_id', label: 'Pond ID', type: 'text', required: true, placeholder: 'e.g. E-14' },
       { key: 'date', label: 'Date', type: 'date', required: true },
@@ -209,6 +215,7 @@ export const CHECKLISTS = [
     name: 'Mortality & Disease Observation',
     description: 'Daily mortality count, patterns and clinical signs',
     icon: 'AlertTriangle',
+    enabled: false,
     fields: [
       { key: 'pond_id', label: 'Pond ID', type: 'text', required: true, placeholder: 'e.g. E-14' },
       { key: 'date', label: 'Date', type: 'date', required: true },
@@ -249,6 +256,7 @@ export const CHECKLISTS = [
     name: 'Harvest Readiness Assessment',
     description: 'Biomass estimate and harvest timing recommendation',
     icon: 'Scale',
+    enabled: false,
     fields: [
       { key: 'pond_id', label: 'Pond ID', type: 'text', required: true, placeholder: 'e.g. E-14' },
       { key: 'date', label: 'Date', type: 'date', required: true },

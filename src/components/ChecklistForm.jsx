@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ChevronLeft, AlertCircle } from 'lucide-react';
+import { ChevronLeft, AlertCircle, Wand2 } from 'lucide-react';
 
 function getInitialValues(fields) {
   const values = {};
@@ -18,11 +18,38 @@ function getInitialValues(fields) {
   return values;
 }
 
+function getAutoFillValues(fields) {
+  const values = {};
+  for (const field of fields) {
+    if (field.type === 'date') {
+      values[field.key] = new Date().toLocaleDateString('en-CA');
+    } else if (field.type === 'time') {
+      values[field.key] = new Date().toTimeString().slice(0, 5);
+    } else if (field.type === 'number') {
+      const min = field.min ?? 0;
+      const max = field.max ?? 100;
+      const mid = (min + max) / 2;
+      const range = max - min;
+      const precision = range < 0.1 ? 4 : range < 1 ? 3 : range < 10 ? 2 : range < 100 ? 1 : 0;
+      values[field.key] = parseFloat(mid.toFixed(precision)).toString();
+    } else if (field.type === 'select') {
+      values[field.key] = field.options?.[0] || '';
+    } else if (field.type === 'multiselect') {
+      values[field.key] = field.options ? [field.options[0]] : [];
+    } else if (field.type === 'text') {
+      values[field.key] = field.placeholder?.replace(/^e\.g\.\s*/i, '') || '';
+    } else {
+      values[field.key] = '';
+    }
+  }
+  return values;
+}
+
 function validateField(field, value) {
   if (field.type === 'number' && value !== '') {
     const num = parseFloat(value);
-    if (field.min !== undefined && num < field.min) return `Outside normal range — expected ≥ ${field.min}${field.unit ? ' ' + field.unit : ''}`;
-    if (field.max !== undefined && num > field.max) return `Outside normal range — expected ≤ ${field.max}${field.unit ? ' ' + field.unit : ''}`;
+    if (field.min !== undefined && num < field.min) return `Outside normal range, expected ≥ ${field.min}${field.unit ? ' ' + field.unit : ''}`;
+    if (field.max !== undefined && num > field.max) return `Outside normal range, expected ≤ ${field.max}${field.unit ? ' ' + field.unit : ''}`;
   }
   return null;
 }
@@ -60,6 +87,13 @@ export default function ChecklistForm({ checklist, onSubmit, onBack }) {
     });
   }
 
+  function handleAutoFill() {
+    const filled = getAutoFillValues(checklist.fields);
+    setValues(filled);
+    setErrors({});
+    setAttempted(false);
+  }
+
   function handleSubmit(e) {
     e.preventDefault();
     setAttempted(true);
@@ -95,10 +129,20 @@ export default function ChecklistForm({ checklist, onSubmit, onBack }) {
           >
             <ChevronLeft className="w-5 h-5" />
           </button>
-          <div>
+          <div className="flex-1 min-w-0">
             <p className="text-sm font-semibold text-skretting-navy leading-tight">{checklist.name}</p>
             <p className="text-xs text-skretting-muted">{checklist.fields.length} fields</p>
           </div>
+          {checklist.id === 'water-quality-advanced' && (
+            <button
+              type="button"
+              onClick={handleAutoFill}
+              title="Fill with valid sample values"
+              className="flex-shrink-0 p-1.5 rounded-md text-skretting-muted hover:text-skretting-teal hover:bg-skretting-teal-soft transition-colors duration-150"
+            >
+              <Wand2 className="w-4 h-4" />
+            </button>
+          )}
         </div>
       </header>
 
@@ -192,7 +236,7 @@ export default function ChecklistForm({ checklist, onSubmit, onBack }) {
               {errors[field.key] && (
                 <div className="flex items-start gap-1.5 mt-1.5 p-2 bg-amber-50 border border-amber-200 rounded-md">
                   <AlertCircle className="w-3.5 h-3.5 text-amber-600 flex-shrink-0 mt-0.5" />
-                  <p className="text-xs text-amber-700">{errors[field.key]} — will be flagged for review</p>
+                  <p className="text-xs text-amber-700">{errors[field.key]} - flagged for review</p>
                 </div>
               )}
             </div>
